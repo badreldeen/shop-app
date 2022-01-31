@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class CompaniesController extends Controller
@@ -14,6 +15,10 @@ class CompaniesController extends Controller
     public function index()
     {
         //
+        return response()->json([
+            'message'=>'ok',
+            'data'=>Company::all()
+        ],200);
     }
 
     /**
@@ -25,6 +30,16 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
         //
+        $Company = Company::create([
+            'name' =>$request->name,
+            'description'=>$request->description,
+           
+        ]);
+
+        return response()->json([
+            'message'=>'ok',
+            'data'=> $Company
+        ],201);
     }
 
     /**

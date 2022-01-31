@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -14,6 +15,10 @@ class ProductsController extends Controller
     public function index()
     {
         //
+        return response()->json([
+            'message'=>'ok',
+            'data'=>Product::all()
+        ],200);
     }
 
     /**
@@ -25,6 +30,26 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         //
+        $Product = Product::create([
+            'product_name' =>$request->product_name,
+            'slug' =>$request->slug,
+            'description'=>$request->description,
+            'category_id' =>$request->category_id,
+            'company_id' =>$request->company_id,
+            'price'=>$request->price,
+            'image'=>$request->image,
+           
+        ]);
+
+
+
+        
+
+
+        return response()->json([
+            'message'=>'ok',
+            'data'=>$Product
+        ],201);
     }
 
     /**

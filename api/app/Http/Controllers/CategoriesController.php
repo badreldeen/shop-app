@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -14,6 +15,16 @@ class CategoriesController extends Controller
     public function index()
     {
         //
+        //Category::all();
+        //$g=  new Category();
+        //$r = $g->children;
+    
+        $r = Category::where('parent_id',1)->with('products')->get();
+        //var_dump($r);
+        return response()->json([
+            'message'=>'ok',
+            'data'=>$r
+        ],200);
     }
 
     /**
@@ -25,6 +36,18 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
+        
+        $Category = Category::create([
+            'name' =>$request->name,
+            'slug' =>$request->slug,
+            'description'=>$request->description,
+            'parent_id'=>$request->parent_id
+        ]);
+
+        return response()->json([
+            'message'=>'ok',
+            'data'=>$Category
+        ],201);
     }
 
     /**

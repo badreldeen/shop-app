@@ -12,6 +12,8 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+
+    
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -27,7 +29,12 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/axios',
   ],
+
+  axios: {
+    baseURL: 'http://127.0.0.1:5000/api/',
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
