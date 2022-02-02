@@ -15,7 +15,7 @@ class CategoriesController extends Controller
     public function index()
     {
     
-        $allCategories = Category::where('parent_id',null)->with('subCategories')->get();
+        $allCategories = Category::where('parent_id',0)->with('subCategories')->get();
         //var_dump($r);
         return response()->json([
             'message'=>'ok',

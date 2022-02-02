@@ -18,20 +18,10 @@ use App\Http\Controllers\CategoriesController;
 */
 
 
-//Category
+
 Route::resource('/categories' , CategoriesController::class);
 Route::resource('/companies' , CompaniesController::class);
 Route::resource('/products' , ProductsController::class);
-
-
-//categories
-
-//Route::get('/categories/{id}',[CompaniesController::class,'GetMainCategories']);
-Route::get('/categories/{id}',[CategoriesController::class,'BrowseCategory']);
-
-//companies
-
-//Route::get('/companies/{id}',[CompaniesController::class,'']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
