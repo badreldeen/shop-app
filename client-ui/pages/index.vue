@@ -1,29 +1,57 @@
 <template>
   <main>
-    <div class="max-w-7xl mx-auto">
+    <div class="">
      
-       
 
+     <Hero />
 
-       <section>
+     <ProductsList :products="products"/>
 
-        kkk {{brands}}
-        <div class="bg-white w-full">
-          <div class="max-w-2xl mx-auto py-2 px-4 sm:py-2 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl  tracking-tight text-gray-900"><b>SHOP </b>By Category</h2>
+      <!--Category by Section -->
+      <section>
+        <div class="bg-white  from-indigo-50 to-indigo-100 p-4 w-full mt-6">
+          <div class="max-w-2xl mx-auto  lg:max-w-7xl ">
+              <h2 class="text-2xl font-extrabold tracking-tight text-indigo-900 uppercase underline mb-4">SHOP by category</h2>
 
-            <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              <div class="group relative flex flex-col justify-center items-center p-2">
-                <div class="w-40 h-40  bg-gray-500 aspect-w-1 aspect-h-1 rounded-full overflow-hidden group-hover:opacity-75 l lg:aspect-none">
-                  <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men&#039;s Basic Tee in black." class="w-full h-full object-center object-cover lg:w-full lg:h-full">
-                </div>
-                <span class="justify-center items-center text-2xl">Apple</span>
+              <div v-for="(category,index) in categories" :key="index">
+                  <h3 class="text-xl font-extrabold  tracking-tight text-gray-900 uppercase"><b>{{category.name}}</b></h3>
+                  <p class="text-indigo-800 font-serif font-extralight text-sm">{{category.description}}</p>
+                  <div class="mt-3 flex m-2 space-x-2">
+                      <NuxtLink :to="`companies/${category.id}`"
+                      v-for="(subCategory,index) in category.sub_categories" :key="index"
+                      class="group relative  justify-center items-center p-2">
+                        <div class="w-30 h-30 bg-indigo-100 rounded-lg p-4  group-hover:opacity-75 mb-2 ">
+                          <img :src="subCategory.image" :alt="subCategory.name" class="text-gray-300 ">
+                        </div>
+                        <span class="mt-3  text-gray-600 font-serif">{{subCategory.name}}</span>
+                      </NuxtLink>
+                  </div>
+
+                  <hr class="mt-3 mb-3 text-gray-900"/>
               </div>
 
-              
 
-              <!-- More products... -->
-            </div>
+          </div>
+        </div>
+    </section> 
+
+
+    
+    <!-- Brands Section  -->
+    <section>
+        <div class="bg-white from-indigo-500 to-indigo-900 p-4 w-full mt-6">
+          <div class="max-w-2xl mx-auto  lg:max-w-7xl ">
+           <h2 class="text-2xl font-extrabold tracking-tight text-indigo-900 uppercase underline mb-4">SHOP by brand</h2>
+              <div class="mt-3 flex m-2 ">
+                  <NuxtLink :to="`companies/${brand.id}`"
+                  v-for="(brand,index) in brands" :key="index"
+                  class="flex flex-col justify-center items-center space-x-2 m-1 bg-indigo-100 p-2 rounded-lg">
+                    <div class=" text-gray-900 rounded  hover:opacity-75  ">
+                      <img :src="brand.image" :alt="brand.name" class="text-gray-900 w-20 h-20">
+                    </div>
+                     
+                  </NuxtLink>
+              </div>
           </div>
         </div>
     </section> 
@@ -32,25 +60,7 @@
 
 
 
-       <section>
-        <div class="bg-blue-50 w-full">
-          <div class="max-w-2xl mx-auto py-2 px-4 sm:py-2 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl  tracking-tight text-gray-900"><b>SHOP </b>By Company / Brand</h2>
-
-            <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              <div class="group relative">
-                <div class="w-40 h-40 bg-gray-500 aspect-w-1 aspect-h-1 rounded overflow-hidden group-hover:opacity-75 l lg:aspect-none">
-                  <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men&#039;s Basic Tee in black." class="w-full h-full object-center object-cover lg:w-full lg:h-full">
-                </div>
-                cvxvf
-              </div>
-
-              <!-- More products... -->
-            </div>
-          </div>
-        </div>
-    </section> 
-
+     
 
       
     </div>
@@ -60,22 +70,36 @@
 </template>
 
 <script>
+import Hero from "../components/Hero.vue"
+import ProductsList from "../components/ProductsList.vue";
 export default {
- data(){
-   return{
-      brands:[]
-   }
- },
- mounted(){
-   this.GetBrands()
- },
- methods: {
-  async GetBrands() {
-    const res = await this.$axios.$get('companies')
-    this.brands = await res.data
-
-    //alert(res.data.data)
-  }
-}
+    data() {
+        return {
+            brands: [],
+            categories: [],
+            products:[]
+        };
+    },
+    mounted() {
+        this.GetBrands();
+        this.GetCategories();
+        this.GetProducts()
+    },
+    methods: {
+        async GetBrands() {
+            const res = await this.$axios.$get("companies");
+            this.brands = await res.data;
+        },
+        async GetCategories() {
+            const res = await this.$axios.$get("categories");
+            this.categories = await res.data;
+        },
+        async GetProducts() {
+            const res = await this.$axios.$get("products");
+            this.products = await res.data;
+            alert(products)
+        },
+    },
+    components: { Hero, ProductsList }
 }
 </script>

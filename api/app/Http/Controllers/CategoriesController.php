@@ -14,16 +14,25 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
-        //Category::all();
-        //$g=  new Category();
-        //$r = $g->children;
     
-        $r = Category::where('parent_id',1)->with('products')->get();
+        $allCategories = Category::where('parent_id',null)->with('subCategories')->get();
         //var_dump($r);
         return response()->json([
             'message'=>'ok',
-            'data'=>$r
+            'data'=>$allCategories
+        ],200);
+    }
+    
+
+    
+
+
+    public function GetCategories() {
+        $mainCategories = Category::where('parent_id',null)->with('subCategories')->get();
+        //var_dump($r);
+        return response()->json([
+            'message'=>'ok',
+            'data'=>$mainCategories
         ],200);
     }
 
@@ -59,6 +68,11 @@ class CategoriesController extends Controller
     public function show($id)
     {
         //
+        $BrowseCategory = Category::where('parent_id',$id)->with('subCategories')->with('products')->get();
+        return response()->json([
+            'message'=>'ok',
+            'data'=>$BrowseCategory
+        ],200);
     }
 
     /**

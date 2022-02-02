@@ -32,6 +32,7 @@ class CompaniesController extends Controller
         //
         $Company = Company::create([
             'name' =>$request->name,
+            'image'=>$request->image,
             'description'=>$request->description,
            
         ]);
@@ -51,6 +52,10 @@ class CompaniesController extends Controller
     public function show($id)
     {
         //
+        return response()->json([
+            'message'=>'ok',
+            'data'=> Company::find($id)
+        ],200);
     }
 
     /**

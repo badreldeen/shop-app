@@ -14,10 +14,11 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $products = Product::with('company')->get();
         //
         return response()->json([
             'message'=>'ok',
-            'data'=>Product::all()
+            'data'=>$products
         ],200);
     }
 
