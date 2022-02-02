@@ -61,7 +61,11 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $BrowseProduct = Product::where('id',$id)->with('company')->with('category')->get();
+        return response()->json([
+            'message'=>'ok',
+            'data'=>$BrowseProduct
+        ],200);
     }
 
     /**

@@ -17,7 +17,7 @@
                   <h3 class="text-xl font-extrabold  tracking-tight text-gray-900 uppercase"><b>{{category.name}}</b></h3>
                   <p class="text-indigo-800 font-serif font-extralight text-sm">{{category.description}}</p>
                   <div class="mt-3 flex m-2 space-x-2">
-                      <NuxtLink :to="`companies/${category.id}`"
+                      <NuxtLink :to="`categories/${category.id}`"
                       v-for="(subCategory,index) in category.sub_categories" :key="index"
                       class="group relative  justify-center items-center p-2">
                         <div class="w-30 h-30 bg-indigo-100 rounded-lg p-4  group-hover:opacity-75 mb-2 ">

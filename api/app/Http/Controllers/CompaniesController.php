@@ -52,10 +52,12 @@ class CompaniesController extends Controller
     public function show($id)
     {
         //
+        $BrowseCompany = Company::where('id',$id)->with('products')->get();
         return response()->json([
             'message'=>'ok',
-            'data'=> Company::find($id)
+            'data'=>$BrowseCompany
         ],200);
+       
     }
 
     /**
