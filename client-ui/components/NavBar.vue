@@ -19,10 +19,10 @@
                 
                     <div class="ml-10 flex justify-between space-x-1 flex">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="#" class="text-white   bg-gray-500 px-3 py-3 rounded ">Sign in</a>
+                    <NuxtLink to="/login" class="text-white   bg-gray-500 px-3 py-3 rounded ">Sign in</NuxtLink>
                     <a href="#" class="bg-indigo-900  text-white px-3 py-3 rounded" aria-current="page">Create account</a>
 
-                    <div class="mr-3 mt-4relative">
+                    <div class="mr-3 mt-4relative" v-if="islogin"> 
                         <div class="border border-gray-900">
                             <button type="button" class="max-w-xs bg-gray-800 rounded flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="sr-only">Open user menu</span>
@@ -84,19 +84,25 @@ export default {
     data(){
         return{
             IsOpen:false,
-            menu:[]
+            menu:[],
+            islogin:false
         }
     },
+    
     mounted() {
         
         this.GetCategories();
-        
+        this.islogin =  localStorage.getItem('islogin');
     },
     methods:{
         async GetCategories() {
             const res = await this.$axios.$get("categories");
             this.menu = await res.data;
         },
+        logout(){
+             localStorage.clear()
+             this.$router.push('/')
+        }
     }
 }
 </script>

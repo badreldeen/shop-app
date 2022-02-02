@@ -206,5 +206,22 @@ class DatabaseSeeder extends Seeder
                 'image'=>'SamsungGalaxyS22.jpeg',
             ]
         ]);
+
+
+
+        \App\Models\User::insert([
+            [
+                'name'=>'user',
+                'email'=>'user@badreldeenali.me',
+                'password'=>bcrypt('123456'),
+                'is_admin'=>0,
+            ],
+            [
+                'name'=>'admin',
+                'email'=>'admin@badreldeenali.me',
+                'password'=>bcrypt('123456'),
+                'is_admin'=>1,
+            ]
+        ]); 
     }
 }

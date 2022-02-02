@@ -73,6 +73,7 @@
 import Hero from "../components/Hero.vue"
 import ProductsList from "../components/ProductsList.vue";
 export default {
+    layout:'shop',
     data() {
         return {
             brands: [],
